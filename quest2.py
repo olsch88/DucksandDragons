@@ -1,4 +1,4 @@
-def read_input(filename: str) -> tuple[int]:
+def read_input(filename: str) -> tuple[int, int]:
     with open(file=filename) as f:
         data = f.readline()
     output = data.strip().split("=")[1]
@@ -7,20 +7,20 @@ def read_input(filename: str) -> tuple[int]:
     return output
 
 
-def add(c1: tuple[int], c2: tuple[int]) -> tuple[int]:
+def add(c1: tuple[int, int], c2: tuple[int, int]) -> tuple[int, int]:
     return (c1[0] + c2[0], c1[1] + c2[1])
 
 
-def multiply(c1: tuple[int], c2: tuple[int]) -> tuple[int]:
+def multiply(c1: tuple[int, int], c2: tuple[int, int]) -> tuple[int, int]:
     # [X1 * X2 - Y1 * Y2, X1 * Y2 + Y1 * X2]
     return (c1[0] * c2[0] - c1[1] * c2[1], c1[0] * c2[1] + c1[1] * c2[0])
 
 
-def divide(c1: tuple[int], c2: tuple[int]) -> tuple[int]:
+def divide(c1: tuple[int, int], c2: tuple[int, int]) -> tuple[int, int]:
     return (int(c1[0] / c2[0]), int(c1[1] / c2[1]))
 
 
-def solve_part1(A: tuple[int]) -> tuple[int]:
+def solve_part1(A: tuple[int, int]) -> tuple[int, int]:
     result = (0, 0)
 
     for _ in range(3):
@@ -46,7 +46,7 @@ def should_engrave(point: tuple[int, int]) -> bool:
     return True
 
 
-def solve_part2(A: tuple[int]) -> int:
+def solve_part2(A: tuple[int, int]) -> int:
     engrave_count = 0
     for row in range(A[0], A[0] + 1001, 10):
         for col in range(A[1], A[1] + 1001, 10):
@@ -54,7 +54,7 @@ def solve_part2(A: tuple[int]) -> int:
     return engrave_count
 
 
-def solve_part3(A: tuple[int]) -> int:
+def solve_part3(A: tuple[int, int]) -> int:
     engrave_count = 0
     for row in range(A[0], A[0] + 1001, 1):
         for col in range(A[1], A[1] + 1001, 1):
