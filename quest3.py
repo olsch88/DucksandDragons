@@ -29,6 +29,7 @@ def tests():
 
 
 if __name__=="__main__":
+    tests()
     print(read_crates("q3_p1_example.txt"))
     print(solve_part1(read_crates("q3_p1_input.txt")))
     print(solve_part2(read_crates("q3_p2_input.txt")))
