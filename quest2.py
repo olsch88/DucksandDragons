@@ -1,4 +1,6 @@
 import time
+
+
 def read_input(filename: str) -> tuple[int, int]:
     with open(file=filename) as f:
         data = f.readline()
@@ -83,12 +85,12 @@ def tests():
 
 if __name__ == "__main__":
     tests()
-    start=time.perf_counter()    
+    start = time.perf_counter()
     print(solve_part1(read_input("q2_p1_input.txt")))
     print(f"Time Part 1: {time.perf_counter()-start:.3f} s")
-    start=time.perf_counter()
+    start = time.perf_counter()
     print(solve_part2(read_input("q2_p2_input.txt")))
     print(f"Time Part 2: {time.perf_counter()-start:.3f} s")
-    start=time.perf_counter()
+    start = time.perf_counter()
     print(solve_part3(read_input("q2_p3_input.txt")))
     print(f"Time Part 3: {time.perf_counter()-start:.3f} s")

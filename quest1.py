@@ -1,4 +1,6 @@
 import time
+
+
 def read_names_and_instructions(filename: str) -> tuple[list, list]:
     with open(filename) as f:
         lines = f.readlines()
@@ -57,12 +59,12 @@ def tests():
 
 if __name__ == "__main__":
     tests()
-    start=time.perf_counter()  
+    start = time.perf_counter()
     print(solve_part1(*read_names_and_instructions("q1_p1_input.txt")))
     print(f"Time Part 1: {time.perf_counter()-start:.3f} s")
-    start=time.perf_counter()
+    start = time.perf_counter()
     print(solve_part2(*read_names_and_instructions("q1_p2_input.txt")))
     print(f"Time Part 2: {time.perf_counter()-start:.3f} s")
-    start=time.perf_counter()
+    start = time.perf_counter()
     print(solve_part3(*read_names_and_instructions("q1_p3_input.txt")))
     print(f"Time Part 3: {time.perf_counter()-start:.3f} s")
