@@ -29,20 +29,19 @@ def solve_part2(notes: str) -> int:
     return total_pairs
 
 
-def find_pairs(notes:str, repeats: int, distance: int)->int:
-    pairs=0
+def find_pairs(notes: str, repeats: int, distance: int) -> int:
+    pairs = 0
     length = len(notes)
-    full_notes= notes*repeats
+    full_notes = notes * repeats
     for pos, char in enumerate(full_notes):
-        #search for novice
+        # search for novice
         if char != char.lower():
             continue
-        start =max(0,pos-distance )
-        stop = min(pos+distance+1,len(full_notes))
-        pairs+=full_notes[start:stop].count(char.upper())
+        start = max(0, pos - distance)
+        stop = min(pos + distance + 1, len(full_notes))
+        pairs += full_notes[start:stop].count(char.upper())
     return pairs
-        
-            
+
 
 def solve_part3(notes: str, rep=1, distance=10) -> int:
     number = find_pairs(notes, rep, distance)
@@ -52,9 +51,11 @@ def solve_part3(notes: str, rep=1, distance=10) -> int:
 def tests():
     assert solve_part1(read_notes("q6_p1_example1.txt")) == 5
     assert solve_part2(read_notes("q6_p2_example.txt")) == 11
-    assert solve_part3(read_notes("q6_p3_example1.txt"))==34
-    assert solve_part3(read_notes("q6_p3_example2.txt"), 2,10)==72
-    assert solve_part3(read_notes("q6_p3_example2.txt"), 1000,1000)==3442321
+    assert solve_part3(read_notes("q6_p3_example1.txt")) == 34
+    assert solve_part3(read_notes("q6_p3_example2.txt"), 2, 10) == 72
+    assert solve_part3(read_notes("q6_p3_example2.txt"), 1000, 1000) == 3442321
+
+
 if __name__ == "__main__":
     tests()
     start = time.perf_counter()
