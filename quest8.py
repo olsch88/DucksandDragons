@@ -1,5 +1,5 @@
 import time
-
+from itertools import combinations
 
 def read_data(filename: str) -> list[int]:
     with open(filename) as f:
@@ -58,6 +58,22 @@ def solve_part3(numbers:list[int], circle_length:int)->int:
             if current_intersections> max_intersect:
                 max_intersect = current_intersections
     return max_intersect
+
+def solve_part3_v2(numbers:list[int], circle_length:int)->int:
+    pairs = []
+    for i, number in enumerate(numbers[:-1]):
+        pairs.append((number, numbers[i + 1]))
+    
+    max_intersect=0
+    for i, j in combinations(range(1, circle_length + 1), 2):
+            if i==j:
+                continue
+            current_intersections=0
+            for pair in pairs:
+                current_intersections+=intersect(pair, (i,j))
+            if current_intersections> max_intersect:
+                max_intersect = current_intersections
+    return max_intersect
 def tests():
     assert solve_part1(read_data("q8_p1_example.txt"), 8) == 4
     assert intersect((1, 5), (2, 5)) == False
@@ -87,5 +103,5 @@ if __name__ == "__main__":
     print(f"Solution Part2: {solve_part2(read_data("q8_p2_input.txt"))}")
     print(f"Time Part 2: {time.perf_counter()-start:.3f} s")
     start = time.perf_counter()
-    print(f"Solution Part3: {solve_part3(read_data("q8_p3_input.txt"),256)}")
+    print(f"Solution Part3: {solve_part3_v2(read_data("q8_p3_input.txt"),256)}")
     print(f"Time Part 3: {time.perf_counter()-start:.3f} s")
