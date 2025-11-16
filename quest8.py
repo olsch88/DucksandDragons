@@ -1,6 +1,7 @@
 import time
 from itertools import combinations
 
+
 def read_data(filename: str) -> list[int]:
     with open(filename) as f:
         data = f.readline()
@@ -16,7 +17,7 @@ def intersect(line1: tuple[int, int], line2: tuple[int, int]) -> bool:
         return True
     if max(line1) > max(line2) and min(line1) < max(line2) and min(line1) > min(line2):
         return True
-    if line1 == line2 or (line1[0]==line2[1]and line1[1]==line2[0]) :
+    if line1 == line2 or (line1[0] == line2[1] and line1[1] == line2[0]):
         return True
     return False
 
@@ -42,38 +43,42 @@ def solve_part2(numbers: list[int]) -> int:
 
     return intersects
 
-def solve_part3(numbers:list[int], circle_length:int)->int:
+
+def solve_part3(numbers: list[int], circle_length: int) -> int:
     pairs = []
     for i, number in enumerate(numbers[:-1]):
         pairs.append((number, numbers[i + 1]))
-    
-    max_intersect=0
-    for i in range(1, circle_length+1):
-        for j in range(1,circle_length+1):
-            if i==j:
+
+    max_intersect = 0
+    for i in range(1, circle_length + 1):
+        for j in range(1, circle_length + 1):
+            if i == j:
                 continue
-            current_intersections=0
+            current_intersections = 0
             for pair in pairs:
-                current_intersections+=intersect(pair, (i,j))
-            if current_intersections> max_intersect:
+                current_intersections += intersect(pair, (i, j))
+            if current_intersections > max_intersect:
                 max_intersect = current_intersections
     return max_intersect
 
-def solve_part3_v2(numbers:list[int], circle_length:int)->int:
+
+def solve_part3_v2(numbers: list[int], circle_length: int) -> int:
     pairs = []
     for i, number in enumerate(numbers[:-1]):
         pairs.append((number, numbers[i + 1]))
-    
-    max_intersect=0
+
+    max_intersect = 0
     for i, j in combinations(range(1, circle_length + 1), 2):
-            if i==j:
-                continue
-            current_intersections=0
-            for pair in pairs:
-                current_intersections+=intersect(pair, (i,j))
-            if current_intersections> max_intersect:
-                max_intersect = current_intersections
+        if i == j:
+            continue
+        current_intersections = 0
+        for pair in pairs:
+            current_intersections += intersect(pair, (i, j))
+        if current_intersections > max_intersect:
+            max_intersect = current_intersections
     return max_intersect
+
+
 def tests():
     assert solve_part1(read_data("q8_p1_example.txt"), 8) == 4
     assert intersect((1, 5), (2, 5)) == False
@@ -88,10 +93,10 @@ def tests():
     assert intersect((7, 8), (8, 6)) == False
     assert intersect((7, 5), (1, 5)) == False
     assert intersect((7, 5), (6, 2)) == True
-    assert intersect((2,5), (2,5))==True
-    assert intersect((5,2), (2,5))==True
+    assert intersect((2, 5), (2, 5)) == True
+    assert intersect((5, 2), (2, 5)) == True
     assert solve_part2(read_data("q8_p2_example.txt")) == 21
-    assert solve_part3(read_data("q8_p3_example.txt"),8)==7
+    assert solve_part3(read_data("q8_p3_example.txt"), 8) == 7
 
 
 if __name__ == "__main__":
