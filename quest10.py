@@ -16,21 +16,24 @@ def find_start_pos(grid: list[str]) -> tuple[int, int]:
                 return (row, col)
     return (0, 0)
 
+
 def get_sheep(grid: list[str]) -> set[tuple[int, int]]:
-    sheep=set()
+    sheep = set()
     for row, line in enumerate(grid):
         for col, symbol in enumerate(line):
             if symbol == "S":
                 sheep.add((row, col))
     return sheep
 
+
 def get_shelters(grid: list[str]) -> set[tuple[int, int]]:
-    shelters=set()
+    shelters = set()
     for row, line in enumerate(grid):
         for col, symbol in enumerate(line):
             if symbol == "#":
                 shelters.add((row, col))
     return shelters
+
 
 def solve_part1(grid: list[str], moves: int) -> int:
     start_pos = find_start_pos(grid)
@@ -60,17 +63,21 @@ def solve_part1(grid: list[str], moves: int) -> int:
             queue.append(((current_pos[0] - 2, current_pos[1] - 1), current_steps + 1))
     return n_sheep
 
-def move_sheep(sheep:set[tuple[int,int]], max_dist:int)-> set[tuple[int, int]]:
-    new_sheep= set()
+
+def move_sheep(sheep: set[tuple[int, int]], max_dist: int) -> set[tuple[int, int]]:
+    new_sheep = set()
     for shoop in sheep:
-        if shoop[0]==max_dist: # reached the bottom, removed in for next round
+        if shoop[0] == max_dist:  # reached the bottom, removed in for next round
             continue
-        new_sheep.add((shoop[0]+1, shoop[1]))
-    
+        new_sheep.add((shoop[0] + 1, shoop[1]))
+
     return new_sheep
 
-def move_dragon(dragon_positions:set[tuple[int,int]], max_col:int, max_row:int)-> set[tuple[int, int]]:
-    new_dragon_positions=set()
+
+def move_dragon(
+    dragon_positions: set[tuple[int, int]], max_col: int, max_row: int
+) -> set[tuple[int, int]]:
+    new_dragon_positions = set()
     for pos in dragon_positions:
         new_dragon_positions.add((pos[0] + 1, pos[1] + 2))
         new_dragon_positions.add((pos[0] - 1, pos[1] + 2))
@@ -80,40 +87,46 @@ def move_dragon(dragon_positions:set[tuple[int,int]], max_col:int, max_row:int)-
         new_dragon_positions.add((pos[0] - 1, pos[1] - 2))
         new_dragon_positions.add((pos[0] + 2, pos[1] - 1))
         new_dragon_positions.add((pos[0] - 2, pos[1] - 1))
-    trimmed_dragon_pos=set()
-    for pos in new_dragon_positions: 
-        if not max_row>=pos[0] >=0 and max_col>=pos[1]>=0:
+    trimmed_dragon_pos = set()
+    for pos in new_dragon_positions:
+        if not max_row >= pos[0] >= 0 and max_col >= pos[1] >= 0:
             continue
         trimmed_dragon_pos.add(pos)
-    
+
     return trimmed_dragon_pos
 
-def eat_sheep(dragons:set[tuple[int,int]], sheep:set[tuple[int,int]], shelters:set[tuple[int,int]])->tuple[set[tuple[int,int]], int]:
-    new_sheep=set()
-    eaten=0
+
+def eat_sheep(
+    dragons: set[tuple[int, int]],
+    sheep: set[tuple[int, int]],
+    shelters: set[tuple[int, int]],
+) -> tuple[set[tuple[int, int]], int]:
+    new_sheep = set()
+    eaten = 0
     for shoop in sheep:
         if shoop in dragons and shoop not in shelters:
-            eaten+=1
+            eaten += 1
             continue
         new_sheep.add(shoop)
     return new_sheep, eaten
 
+
 def solve_part2(grid: list[str], moves: int) -> int:
-    max_row=len(grid)
-    max_col =len(grid[0])
+    max_row = len(grid)
+    max_col = len(grid[0])
     start_pos = find_start_pos(grid)
-    dragons:set[tuple[int,int]]=set()
+    dragons: set[tuple[int, int]] = set()
     dragons.add(start_pos)
-    sheep =get_sheep(grid)
-    shelters=get_shelters(grid)
-    total_eaten=0
+    sheep = get_sheep(grid)
+    shelters = get_shelters(grid)
+    total_eaten = 0
     for i in range(moves):
-        dragons=move_dragon(dragons,max_col, max_row)
-        sheep,eaten=eat_sheep(dragons, sheep, shelters)
-        total_eaten+=eaten
-        sheep=move_sheep(sheep, max_row)
-        sheep,eaten=eat_sheep(dragons, sheep, shelters)
-        total_eaten+=eaten
+        dragons = move_dragon(dragons, max_col, max_row)
+        sheep, eaten = eat_sheep(dragons, sheep, shelters)
+        total_eaten += eaten
+        sheep = move_sheep(sheep, max_row)
+        sheep, eaten = eat_sheep(dragons, sheep, shelters)
+        total_eaten += eaten
     return total_eaten
 
 
