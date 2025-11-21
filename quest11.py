@@ -47,6 +47,34 @@ def calc_checksum(ducks: list[int]) -> int:
         total += i * duck
     return total
 
+def move_left_v2(ducks: list[int], max_rounds=-1) -> int:
+    min_pos=0
+    max_pos=0
+    moved=True
+    rounds = 0
+    while moved:
+        moved = False
+        min_pos=ducks.index(min(ducks))
+        max_pos=ducks.index(max(ducks))
+        if ducks[min_pos]==ducks[max_pos]:# all sorted
+            break
+        ducks[min_pos]+=1
+        ducks[max_pos]-=1
+        moved=True
+        rounds +=1
+    return rounds
+
+def move_left_v3(ducks: list[int], max_rounds=-1) -> int:
+    min_pos=0
+    max_pos=0
+    moved=True
+    rounds = 0
+    average=sum(ducks)//len(ducks)
+    for i in range(len(ducks)):
+        if ducks[i]<average:
+            rounds+=average-ducks[i]
+    return rounds
+            
 
 def tests():
     assert move_right([9, 1, 1, 4, 9, 6]) == 6
@@ -63,12 +91,13 @@ def solve_part1(ducks: list[int]) -> int:
     return calc_checksum(ducks)
 
 
+
 def solve_part2(ducks: list[int]) -> int:
     # mini_duck= min(ducks)
     # ducks = [duck - mini_duck for duck in ducks]
     # print(max(ducks)-min(ducks))
     moves = move_right(ducks)
-    moves += move_left(ducks)
+    moves += move_left_v3(ducks)
     return moves
 
 
@@ -88,5 +117,5 @@ if __name__ == "__main__":
     print(f"Solution Part2: {solve_part2(read_data("q11_p2_input.txt"))}")
     print(f"Time Part 2: {time.perf_counter()-start:.3f} s")
     start = time.perf_counter()
-    print(f"Solution Part3: {solve_part3(read_data("q11_p3_input.txt"))}")
+    print(f"Solution Part3: {solve_part2(read_data("q11_p3_input.txt"))}")
     print(f"Time Part 3: {time.perf_counter()-start:.3f} s")
