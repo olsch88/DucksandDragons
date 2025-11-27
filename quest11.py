@@ -47,34 +47,36 @@ def calc_checksum(ducks: list[int]) -> int:
         total += i * duck
     return total
 
+
 def move_left_v2(ducks: list[int], max_rounds=-1) -> int:
-    min_pos=0
-    max_pos=0
-    moved=True
+    min_pos = 0
+    max_pos = 0
+    moved = True
     rounds = 0
     while moved:
         moved = False
-        min_pos=ducks.index(min(ducks))
-        max_pos=ducks.index(max(ducks))
-        if ducks[min_pos]==ducks[max_pos]:# all sorted
+        min_pos = ducks.index(min(ducks))
+        max_pos = ducks.index(max(ducks))
+        if ducks[min_pos] == ducks[max_pos]:  # all sorted
             break
-        ducks[min_pos]+=1
-        ducks[max_pos]-=1
-        moved=True
-        rounds +=1
+        ducks[min_pos] += 1
+        ducks[max_pos] -= 1
+        moved = True
+        rounds += 1
     return rounds
 
+
 def move_left_v3(ducks: list[int], max_rounds=-1) -> int:
-    min_pos=0
-    max_pos=0
-    moved=True
+    min_pos = 0
+    max_pos = 0
+    moved = True
     rounds = 0
-    average=sum(ducks)//len(ducks)
+    average = sum(ducks) // len(ducks)
     for i in range(len(ducks)):
-        if ducks[i]<average:
-            rounds+=average-ducks[i]
+        if ducks[i] < average:
+            rounds += average - ducks[i]
     return rounds
-            
+
 
 def tests():
     assert move_right([9, 1, 1, 4, 9, 6]) == 6
@@ -91,7 +93,6 @@ def solve_part1(ducks: list[int]) -> int:
     return calc_checksum(ducks)
 
 
-
 def solve_part2(ducks: list[int]) -> int:
     # mini_duck= min(ducks)
     # ducks = [duck - mini_duck for duck in ducks]
@@ -102,7 +103,7 @@ def solve_part2(ducks: list[int]) -> int:
 
 
 def solve_part3(ducks: list[int]) -> int:
-    return 0    # moves = 0
+    return 0  # moves = 0
     # for i in range(len(ducks[:-1])):
     #     moves += ducks[i + 1] - ducks[i]
     # return moves
